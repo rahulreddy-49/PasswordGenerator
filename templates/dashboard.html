@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard | Secure Password Generator AI{% endblock %}
+
+{% block content %}
+<div class="row g-4 animate-up">
+    <!-- Stat Cards -->
+    <div class="col-md-3">
+        <div class="glass-card p-4 text-center">
+            <p class="text-muted small mb-1">Generated</p>
+            <h2 class="fw-bold text-info">{{ stats.total_generated }}</h2>
+            <div class="progress mt-2" style="height: 3px;">
+                <div class="progress-bar bg-info" style="width: 70%"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="glass-card p-4 text-center">
+            <p class="text-muted small mb-1">Secured in Vault</p>
+            <h2 class="fw-bold" style="color: var(--neon-green)">{{ stats.total_secured }}</h2>
+            <div class="progress mt-2" style="height: 3px;">
+                <div class="progress-bar" style="width: 45%; background: var(--neon-green)"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="glass-card p-4 text-center">
+            <p class="text-muted small mb-1">Avg Strength</p>
+            <h2 class="fw-bold text-warning">{{ stats.average_strength }}</h2>
+            <div class="progress mt-2" style="height: 3px;">
+                <div class="progress-bar bg-warning" style="width: 90%"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="glass-card p-4 text-center">
+            <p class="text-muted small mb-1">Breach Alerts</p>
+            <h2 class="fw-bold text-danger">0</h2>
+            <div class="progress mt-2" style="height: 3px;">
+                <div class="progress-bar bg-danger" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts/Activity -->
+    <div class="col-lg-8">
+        <div class="glass-card p-4 h-100">
+            <h5 class="mb-4">Security Activity Log</h5>
+            {% if not stats.recent_activity %}
+            <div class="text-center py-5">
+                <p class="text-muted">No recent activity detected.</p>
+            </div>
+            {% else %}
+            <div class="list-group list-group-flush">
+                {% for act in stats.recent_activity %}
+                <div class="list-group-item bg-transparent border-secondary py-3">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <i class="fas fa-shield-check text-info me-2"></i>
+                            <span class="text-white">New password secured for <strong>{{ act.site_name }}</strong></span>
+                        </div>
+                        <span class="small text-muted">{{ act.created_at }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="glass-card p-4 h-100">
+            <h5 class="mb-4">System Integrity</h5>
+            <div class="text-center py-4">
+                <div class="spinner-grow text-info mb-3" role="status"></div>
+                <p class="text-white mb-1">Encryption: AES-256</p>
+                <p class="text-white mb-1">Protocol: Secure-SSL</p>
+                <p class="text-white mb-1">AI Engine: v5.2 (Stable)</p>
+                <hr class="border-secondary">
+                <span class="badge rounded-pill bg-success px-4">System Optimized</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

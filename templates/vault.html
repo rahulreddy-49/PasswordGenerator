@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %}Vault | Secure Password Generator AI{% endblock %}
+
+{% block content %}
+<div class="row animate-up">
+    <div class="col-12 mb-4 d-flex justify-content-between align-items-center">
+        <h2 class="fw-bold"><i class="fas fa-vault me-2 text-info"></i> SECURE VAULT</h2>
+        <span class="badge bg-secondary">{{ passwords|length }} Entries Stored</span>
+    </div>
+
+    <div class="col-12">
+        {% if not passwords %}
+        <div class="glass-card p-5 text-center">
+            <i class="fas fa-folder-open fa-3x mb-3 text-muted"></i>
+            <p class="text-muted">Your vault is empty. Generate and save a password to see it here.</p>
+            <a href="{{ url_for('generate_page') }}" class="btn btn-neon mt-3">Generate Now</a>
+        </div>
+        {% else %}
+        <div class="table-responsive">
+            <table class="table table-dark table-hover align-middle custom-table">
+                <thead>
+                    <tr class="text-muted">
+                        <th>Site / Service</th>
+                        <th>Username</th>
+                        <th>Password</th>
+                        <th>Created At</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in passwords %}
+                    <tr id="entry-{{ entry.id }}">
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="site-icon me-3 bg-primary text-white p-2 rounded">
+                                    <i class="fas fa-globe"></i>
+                                </div>
+                                <span class="fw-bold text-white">{{ entry.site_name }}</span>
+                            </div>
+                        </td>
+                        <td class="text-muted">{{ entry.username }}</td>
+                        <td>
+                            <div class="input-group input-group-sm" style="width: 200px;">
+                                <input type="password" class="form-control bg-transparent border-secondary text-white" value="{{ entry.password }}" id="pwd-{{ entry.id }}" readonly>
+                                <button class="btn btn-outline-secondary" onclick="toggleRowVisibility({{ entry.id }})"><i class="fas fa-eye" id="eye-{{ entry.id }}"></i></button>
+                                <button class="btn btn-outline-info" onclick="copyValue('pwd-{{ entry.id }}')"><i class="fas fa-copy"></i></button>
+                            </div>
+                        </td>
+                        <td class="small text-muted">{{ entry.created_at }}</td>
+                        <td class="text-end">
+                            <button class="btn btn-sm btn-outline-danger" onclick="deleteFromVault({{ entry.id }})"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    .custom-table {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+    .table-dark {
+        --bs-table-bg: transparent;
+    }
+    .site-icon {
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function toggleRowVisibility(id) {
+        const input = document.getElementById(`pwd-${id}`);
+        const icon = document.getElementById(`eye-${id}`);
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.className = 'fas fa-eye-slash';
+        } else {
+            input.type = 'password';
+            icon.className = 'fas fa-eye';
+        }
+    }
+
+    function copyValue(id) {
+        const input = document.getElementById(id);
+        const originalType = input.type;
+        input.type = 'text';
+        input.select();
+        document.execCommand('copy');
+        input.type = originalType;
+        showToast('Password copied to clipboard!');
+    }
+</script>
+{% endblock %}

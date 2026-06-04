@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}Analyze | Secure Password Generator AI{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center animate-up">
+    <div class="col-lg-8">
+        <div class="glass-card p-5">
+            <h2 class="fw-bold mb-4 text-center"><i class="fas fa-search-shield me-2 text-info"></i> PASSWORD ANALYZER</h2>
+            
+            <div class="mb-4">
+                <label class="form-label text-muted">Enter Password to Analyze</label>
+                <div class="input-group input-group-lg">
+                    <input type="password" id="analyze-input" class="form-control bg-dark border-secondary text-white" placeholder="Type your password..." oninput="analyzePasswordInput(this.value)">
+                    <button class="btn btn-outline-secondary" onclick="toggleVisibility()"><i class="fas fa-eye" id="eye-icon"></i></button>
+                </div>
+            </div>
+
+            <div class="bg-dark p-4 rounded-3 border border-secondary mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-muted">Security Score: <span id="strength-text" class="fw-bold">Waiting...</span></span>
+                    <span class="text-muted">Entropy: <span id="entropy-score" class="text-white">0</span> bits</span>
+                </div>
+                <div class="strength-meter">
+                    <div id="strength-bar" class="strength-bar"></div>
+                </div>
+                <div id="analysis-feedback" class="mt-3">
+                    <!-- Suggestions will appear here -->
+                </div>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="p-3 border border-secondary rounded-3 text-center">
+                        <p class="text-muted small mb-1">Time to crack (Offline)</p>
+                        <h4 id="crack-time" class="text-info mb-0">N/A</h4>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-3 border border-secondary rounded-3 text-center">
+                        <p class="text-muted small mb-1">Brute-force Resistance</p>
+                        <h4 class="text-white mb-0">High-Grade</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <h4 class="mb-4">Security Tips</h4>
+            <div class="list-group">
+                <div class="list-group-item bg-transparent border-secondary text-muted mb-2 rounded-3">
+                    <i class="fas fa-check-circle text-success me-2"></i> Use at least 12-16 characters.
+                </div>
+                <div class="list-group-item bg-transparent border-secondary text-muted mb-2 rounded-3">
+                    <i class="fas fa-check-circle text-success me-2"></i> Mix uppercase, lowercase, numbers, and symbols.
+                </div>
+                <div class="list-group-item bg-transparent border-secondary text-muted mb-2 rounded-3">
+                    <i class="fas fa-times-circle text-danger me-2"></i> Avoid personal info (birthdays, names).
+                </div>
+                <div class="list-group-item bg-transparent border-secondary text-muted mb-2 rounded-3">
+                    <i class="fas fa-times-circle text-danger me-2"></i> Do not reuse passwords across multiple sites.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function toggleVisibility() {
+        const input = document.getElementById('analyze-input');
+        const icon = document.getElementById('eye-icon');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.className = 'fas fa-eye-slash';
+        } else {
+            input.type = 'password';
+            icon.className = 'fas fa-eye';
+        }
+    }
+</script>
+{% endblock %}

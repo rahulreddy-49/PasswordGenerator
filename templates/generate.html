@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}Generate | Secure Password Generator AI{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center animate-up">
+    <div class="col-lg-8">
+        <div class="glass-card p-5">
+            <h2 class="fw-bold mb-4 text-center"><i class="fas fa-terminal me-2 text-info"></i> PASSWORD GENERATOR</h2>
+            
+            <div class="input-group input-group-lg mb-4">
+                <input type="text" id="generated-password" class="form-control bg-dark border-secondary text-white fw-bold" readonly placeholder="Click Generate...">
+                <button class="btn btn-neon" onclick="copyToClipboard('generated-password')"><i class="fas fa-copy"></i></button>
+                <button class="btn btn-purple" onclick="generatePassword()"><i class="fas fa-sync-alt"></i></button>
+            </div>
+
+            <div class="row g-4 mb-4">
+                <div class="col-md-6">
+                    <label class="form-label text-muted">Password Length: <span id="length-val" class="text-white">16</span></label>
+                    <input type="range" class="form-range" id="length" min="8" max="64" value="16" oninput="document.getElementById('length-val').innerText = this.value">
+                </div>
+                <div class="col-md-6">
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="upper" checked>
+                                <label class="form-check-label text-muted">Uppercase</label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="lower" checked>
+                                <label class="form-check-label text-muted">Lowercase</label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="digits" checked>
+                                <label class="form-check-label text-muted">Numbers</label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="symbols" checked>
+                                <label class="form-check-label text-muted">Symbols</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-dark p-4 rounded-3 border border-secondary">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-muted">Strength: <span id="strength-text" class="fw-bold">N/A</span></span>
+                    <span class="text-muted">Entropy: <span id="entropy-score" class="text-white">0</span> bits</span>
+                </div>
+                <div class="strength-meter">
+                    <div id="strength-bar" class="strength-bar"></div>
+                </div>
+                <p class="mt-3 mb-0 text-muted small">
+                    <i class="fas fa-history me-1"></i> Crack time estimation: <span id="crack-time" class="text-white">N/A</span>
+                </p>
+            </div>
+
+            <div class="mt-4 text-center">
+                <button class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#saveModal">
+                    <i class="fas fa-save me-2"></i>Save to Vault
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Save Modal -->
+<div class="modal fade" id="saveModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark border-secondary text-white">
+            <div class="modal-header border-secondary">
+                <h5 class="modal-title">Save to Secure Vault</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Service/Site Name</label>
+                    <input type="text" id="vault-site" class="form-control" placeholder="e.g. Google, GitHub">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Username/Email</label>
+                    <input type="text" id="vault-user" class="form-control" placeholder="e.g. user@example.com">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="text" id="vault-password" class="form-control" readonly>
+                </div>
+            </div>
+            <div class="modal-footer border-secondary">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-neon" onclick="saveToVault()" data-bs-dismiss="modal">Save Entry</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Link input to modal
+    document.getElementById('saveModal').addEventListener('show.bs.modal', function () {
+        document.getElementById('vault-password').value = document.getElementById('generated-password').value;
+    });
+</script>
+{% endblock %}
