@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | CipherVault PRO</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="pt-5">
+    <canvas id="matrix-canvas"></canvas>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand cyber-font" href="index.html">
+                <i class="bi bi-shield-lock-fill me-2" style="color: var(--neon-green);"></i>CIPHERVAULT
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="generator.html">Generator</a></li>
+                    <li class="nav-item"><a class="nav-link" href="analyzer.html">Analyzer</a></li>
+                    <li class="nav-item"><a class="nav-link" href="vault.html">Vault</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="about.html">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5 pt-4">
+        <div class="max-width-900 mx-auto">
+            <h1 class="cyber-font text-white mb-4">THE CIPHERVAULT <span style="color: var(--neon-green);">MANIFESTO</span></h1>
+            
+            <div class="glass-card mb-5">
+                <h3 class="cyber-font text-info mb-4">Security Philosophy</h3>
+                <p class="text-secondary leading-relaxed">
+                    In an era of quantum computing and sophisticated brute-force attacks, traditional password managers are becoming vulnerable. 
+                    CipherVault was built on the principle of <strong>Zero-Persistence Security</strong>. Our architecture ensures that 
+                    your master encryption keys never travel across the network.
+                </p>
+                <div class="row g-4 mt-2">
+                    <div class="col-md-6">
+                        <div class="p-3 border border-secondary border-opacity-20 rounded">
+                            <h5 class="cyber-font text-white small">HYPER-ENCRYPTION</h5>
+                            <p class="small text-secondary m-0">AES-256 Symmetric encryption using Fernet specification with salted key derivation.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-3 border border-secondary border-opacity-20 rounded">
+                            <h5 class="cyber-font text-white small">ENTROPY ENGINE</h5>
+                            <p class="small text-secondary m-0">Zxcvbn-powered strength analysis providing realistic crack-time estimates for GPUs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4 mb-5">
+                <div class="col-md-4">
+                    <div class="glass-card text-center">
+                        <i class="bi bi-shield-shaded display-4 text-success"></i>
+                        <h5 class="cyber-font mt-3">Private</h5>
+                        <p class="small text-secondary">Local-first analysis means your data is yours alone.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="glass-card text-center">
+                        <i class="bi bi-lightning-charge display-4 text-warning"></i>
+                        <h5 class="cyber-font mt-3">Fast</h5>
+                        <p class="small text-secondary">Optimized Rust-inspired Python backend for instant results.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="glass-card text-center">
+                        <i class="bi bi-cpu display-4 text-danger"></i>
+                        <h5 class="cyber-font mt-3">Modern</h5>
+                        <p class="small text-secondary">Built for the futuristic web with a cyberpunk aesthetic.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center pb-5">
+                <h4 class="cyber-font text-white mb-4">Join the Elite Security Tier</h4>
+                <a href="generator.html" class="btn btn-cyber btn-lg px-5">GET STARTED NOW</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

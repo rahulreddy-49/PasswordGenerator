@@ -1,0 +1,192 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator | CipherVault PRO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="bg-glow"></div>
+    <canvas id="matrix-canvas"></canvas>
+
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand cyber-font" href="index.html">
+                <i class="bi bi-shield-lock-fill me-2" style="color: var(--accent-cyan);"></i>CIPHERVAULT
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="generator.html">Generator</a></li>
+                    <li class="nav-item"><a class="nav-link" href="analyzer.html">Analyzer</a></li>
+                    <li class="nav-item"><a class="nav-link" href="vault.html">Vault</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-5 mt-5">
+        <div class="row g-5">
+            <!-- Left Side: Generator Controls -->
+            <div class="col-lg-7">
+                <div class="reveal">
+                    <div class="mb-4">
+                        <span class="badge-cyber mb-2">SECURE ENGINE</span>
+                        <h2 class="cyber-font text-white">KEY DEPLOYMENT</h2>
+                        <p class="text-secondary small">Generate high-entropy cryptographic sequences.</p>
+                    </div>
+
+                    <div class="glass-card mb-4">
+                        <div class="password-display shadow-sm" id="passwordResult">••••••••••••••••</div>
+                        
+                        <div class="row g-4 mb-5">
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <label class="text-secondary small font-monospace">ENTROPY LENGTH</label>
+                                    <span id="lengthVal" class="text-cyan font-monospace">16</span>
+                                </div>
+                                <input type="range" class="slider-custom" id="length" min="8" max="64" value="16" oninput="document.getElementById('lengthVal').innerText = this.value">
+                            </div>
+                        </div>
+
+                        <div class="row g-4 mb-5">
+                            <div class="col-md-6 text-start">
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="uppercase" checked>
+                                    <label class="form-check-label text-secondary small">UPPERCASE (A-Z)</label>
+                                </div>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="lowercase" checked>
+                                    <label class="form-check-label text-secondary small">LOWERCASE (a-z)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-start">
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="numbers" checked>
+                                    <label class="form-check-label text-secondary small">NUMBERS (0-9)</label>
+                                </div>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="symbols" checked>
+                                    <label class="form-check-label text-secondary small">SYMBOLS (!@#$)</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-3">
+                            <button class="btn btn-cyber flex-grow-1" onclick="generatePassword()">
+                                <i class="bi bi-cpu me-2"></i>GENERATE KEY
+                            </button>
+                            <button class="btn btn-outline-cyber" onclick="copyPassword()">
+                                <i class="bi bi-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Vault Save Section (Hidden initially) -->
+                    <div id="saveSection" class="reveal mt-4" style="display: none;">
+                        <div class="glass-card border-info border-opacity-20 p-4">
+                            <h6 class="cyber-font text-info-emphasis small mb-4">VAULT ATTESTATION</h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <input type="text" id="siteName" class="cyber-input" placeholder="Service Name (e.g. GitHub)">
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" id="username" class="cyber-input" placeholder="User Identity">
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-outline-cyber w-100" onclick="saveToVault()">
+                                        <i class="bi bi-shield-plus me-2"></i>COMMIT TO VAULT
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Information & Tips -->
+            <div class="col-lg-5">
+                <div class="reveal">
+                    <div class="glass-card h-100">
+                        <h5 class="cyber-font text-white mb-4"><i class="bi bi-info-circle text-cyan me-2"></i>BEST PRACTICES</h5>
+                        
+                        <div class="mb-4">
+                            <h6 class="text-white small mb-1">Entropy Matters</h6>
+                            <p class="text-muted small">Passwords should be at least 16 characters long and include a mix of all character types to resist brute-force attacks.</p>
+                        </div>
+
+                        <div class="mb-4">
+                            <h6 class="text-white small mb-1">Zero Trust Storage</h6>
+                            <p class="text-muted small">Your keys are encrypted using AES-256 before leaving your session. We never store raw keys.</p>
+                        </div>
+
+                        <div class="p-3 bg-black bg-opacity-25 rounded border border-secondary border-opacity-10 mb-4">
+                            <div class="d-flex align-items-center gap-3">
+                                <i class="bi bi-shield-shaded text-purple fs-2"></i>
+                                <div>
+                                    <h6 class="text-white mb-0 small">Quantum Readiness</h6>
+                                    <p class="text-muted mb-0" style="font-size: 0.7rem;">Algorithms optimized for future-proof security.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-auto py-3">
+                            <img src="https://img.icons8.com/isometric/100/shield.png" class="opacity-25" style="filter: hue-rotate(150deg); width: 80px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        let lastGenerated = "";
+
+        async function generatePassword() {
+            const options = {
+                length: document.getElementById('length').value,
+                uppercase: document.getElementById('uppercase').checked,
+                lowercase: document.getElementById('lowercase').checked,
+                numbers: document.getElementById('numbers').checked,
+                symbols: document.getElementById('symbols').checked
+            };
+            const res = await ApiService.generatePassword(options);
+            lastGenerated = res.password;
+            document.getElementById('passwordResult').innerText = res.password;
+            document.getElementById('saveSection').style.display = 'block';
+            showToast("Key generated successfully", "success");
+        }
+
+        function copyPassword() {
+            if(!lastGenerated) return;
+            navigator.clipboard.writeText(lastGenerated);
+            showToast("Copied to clipboard", "info");
+        }
+
+        async function saveToVault() {
+            const data = {
+                site_name: document.getElementById('siteName').value,
+                username: document.getElementById('username').value,
+                password: lastGenerated,
+                category: 'Work'
+            };
+            if(!data.site_name || !data.username) return showToast("Identity details required", "error");
+            const res = await ApiService.savePassword(data);
+            if(res.success) {
+                showToast("Key secured in vault", "success");
+                document.getElementById('saveSection').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
